@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Test task</title>
+  <script src="https://js.stripe.com/v3/"></script>
+  <link rel="icon" href="data:,">
+</head>
+<body>
+
+{% if order %}
+  {% for order_item in order_items %}
+    <h1>{{ order_item.item.name }}</h1>
+    <p>{{ order_item.item.description }}</p>
+    <p>{{ order_item.quantity }}</p>
+    <p>Price: {{ order_item.items_price }}</p>
+  {% endfor %}
+  <button id='buy-button'>Buy</button>
+{% else %}
+  <h1>{{ item.name }}</h1>
+  <p>{{ item.description }}</p>
+  <p>{{ quantity }}</p>
+  <p>Price: {{ item.price }}</p>
+  <button id='buy-button'>Buy</button>
+{% endif %}
+<script type="text/javascript">
+    let pathName = window.location.pathname.split('/');
+    const stripe = Stripe('{{ stripe_publishable_key }}');
+    const buyButton = document.getElementById('buy-button');
+    buyButton.addEventListener('click', function () {
+        fetch(`/bye/${pathName[2]}/?target=${pathName[1]}`,
+            {
+                method: 'GET',
+            })
+            .then(response => response.json())
+            .then(session => stripe.redirectToCheckout({sessionId: session.id}))
+            .catch(error => console.error('Ошибка при получении session_id:', error));
+    });
+</script>
+
+</body>
+</html>
