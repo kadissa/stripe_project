@@ -1,6 +1,5 @@
 """Django Stripe Orders"""
 
-
 from django.db import models
 
 
@@ -11,8 +10,6 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
-    def __repr__(self):
-        return classmethod.__class__
 
 
 class OrderItem(models.Model):
