@@ -1,8 +1,8 @@
 import os
 
 import stripe
-from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse, HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.views.generic import DetailView
 from django.views.generic import TemplateView
@@ -50,7 +50,11 @@ class GetStripeSessionId(View):
 
 
 def get_order(request, pk):
-    order = Order.objects.get(id=pk)
+    try:
+        order = Order.objects.get(pk=pk)
+    except Order.DoesNotExist:
+        return HttpResponse('Order Not Found. Return to admin-panel and '
+                            'create order', status=404)
     order_items = OrderItem.objects.filter(order=order)
     context = {
         'order': order,

@@ -1,0 +1,27 @@
+name: stripe_project
+services:
+    backend:
+      build: ./
+      volumes:
+        - static:/app/
+      env_file:
+        - .env
+      depends_on:
+        - db
+    db:
+      image: postgres:15.12
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
+      env_file:
+        - .env
+    nginx:
+      build: ./nginx
+      ports:
+        - 80:80
+      volumes:
+        - static:/staticfiles/
+      depends_on:
+        - backend
+volumes:
+    postgres_data:
+    static:
