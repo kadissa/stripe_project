@@ -22,26 +22,26 @@ To get a local copy up and running follow these simple example steps.
    ```
 2. Open project in your IDE, create file `.env` in the root directory
 
-3. Enter your credentials in `.env` (without space, without quotes)
+3. Enter your credentials, data in `.env` (without space, without quotes)
 
     for example:
    ```
    STRIPE_PUBLISHABLE_KEY=51QwNOyIyM0huXj8kzmKQ3j89CN7c6ww7
    
    ```
-4. Install and run virtual environment. 
-5. Install dependency, make migrations, create superuser...
 
-   ```pip install -r requirements.txt```
+4. Run docker-compose:
 
-   ```python manage.py makemigrations```
-    
-   ```python manage.py migrate```
+   ```docker compose up -d --build```
+5. ```docker compose exec backend python manage.py migrate```
+6. ```docker compose exec backend python manage.py collectstatic ```
+7. ```docker compose exec backend python manage.py createsuperuser```
+8. Enter in browser address bar: http://127.0.0.1/admin/
+9. Fill in the required data in the admin-panel.
+10. Enter in browser address bar: http://127.0.0.1/item/1
 
-   ```python manage.py createsuperuser```
 
-6. Run ```python manage.py runserver```
-<!-- CONTACT -->
+
 
 ## Contact
 

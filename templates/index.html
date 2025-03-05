@@ -8,6 +8,8 @@
 <body>
 
 {% if order %}
+  <p><a href="{% url 'item' order.id %}">move to Item</a></p>
+
   {% for order_item in order_items %}
     <h1>{{ order_item.item.name }}</h1>
     <p>{{ order_item.item.description }}</p>
@@ -16,6 +18,7 @@
   {% endfor %}
   <button id='buy-button'>Buy</button>
 {% else %}
+  <p><a href="{% url 'order' item.id %}">move to Order</a></p>
   <h1>{{ item.name }}</h1>
   <p>{{ item.description }}</p>
   <p>{{ quantity }}</p>
